@@ -194,8 +194,19 @@ function iniciarAccesibilidad() {
     catch { settings = { fontSize: 100, contrast: false, motion: false }; }
     const aplicar = () => { document.documentElement.style.fontSize = `${settings.fontSize}%`; document.body.classList.toggle('high-contrast', settings.contrast); document.body.classList.toggle('a11y-reduce-motion', settings.motion); localStorage.setItem('a11ySettings', JSON.stringify(settings)); };
     aplicar();
-    trigger.addEventListener('click', () => { panel.hidden = !panel.hidden; trigger.setAttribute('aria-expanded', String(!panel.hidden)); });
-    $('#accessibilityClose')?.addEventListener('click', () => { panel.hidden = true; trigger.focus(); });
+    const mostrarPanel = () => {
+        panel.hidden = false;
+        panel.classList.remove('is-open');
+        requestAnimationFrame(() => panel.classList.add('is-open'));
+        trigger.setAttribute('aria-expanded', 'true');
+    };
+    const ocultarPanel = () => {
+        panel.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+        window.setTimeout(() => { if (!panel.classList.contains('is-open')) panel.hidden = true; }, 220);
+    };
+    trigger.addEventListener('click', () => panel.hidden ? mostrarPanel() : ocultarPanel());
+    $('#accessibilityClose')?.addEventListener('click', () => { ocultarPanel(); trigger.focus(); });
     $$('[data-a11y-action]').forEach(button => button.addEventListener('click', () => {
         const action = button.dataset.a11yAction;
         if (action === 'font-increase') settings.fontSize = Math.min(130, settings.fontSize + 10);
