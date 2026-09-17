@@ -1799,7 +1799,7 @@ body.dark-mode .video-canal-card:hover::after {
 }
 
 .image-3d {
-    max-width: 220px;
+    max-width: 480px;
     width: 90%;
     height: auto;
     display: block;
@@ -2049,7 +2049,7 @@ body.dark-mode .presentacion-sub {
 }
 /* Logo SIN tarjeta blanca */
 .image-3d {
-    max-width: 220px;
+    max-width: 480px;
     width: 90%;
     height: auto;
     display: block;
@@ -2323,7 +2323,7 @@ body:not(.high-contrast)::before {
     opacity: .16;
     background-image: url('../imagenes/Coloso.png'), url('../imagenes/Coloso.png'), url('../imagenes/Coloso.png'), url('../imagenes/Coloso.png'), url('../imagenes/Coloso.png'), url('../imagenes/Coloso.png'), url('../imagenes/Coloso.png'), url('../imagenes/Coloso.png'), url('../imagenes/Coloso.png'), url('../imagenes/Coloso.png'), url('../imagenes/Coloso.png'), url('../imagenes/Coloso.png');
     background-repeat: no-repeat;
-    background-size: 48px, 60px, 55px, 70px, 50px, 62px, 72px, 56px, 38px, 42px, 34px, 40px;
+    background-size: 86px, 108px, 99px, 126px, 90px, 112px, 130px, 100px, 68px, 76px, 60px, 72px;
     background-position: 2% 4%, 8% 10%, 92% 5%, 96% 9%, 4% 92%, 9% 88%, 93% 94%, 97% 90%, 0% 0%, 99% 1%, 2% 95%, 98% 95%;
     animation: pulposFlotando 26s ease-in-out infinite;
 }
