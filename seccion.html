@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file:; style-src 'self' file: 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' file: https://fonts.gstatic.com; img-src 'self' file: https: data:; media-src 'self' file: https:; frame-src https://www.youtube.com https://www.youtube-nocookie.com; connect-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coloso Play | Sección</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/seccion.css">
+</head>
+<body>
+    <div class="burbuja-rosa" aria-hidden="true"></div>
+    <div id="pageTransition" aria-hidden="true"></div>
+    
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-area" id="logoLink" style="cursor: pointer;">
+                <img src="imagenes/Logo.png" alt="Areandina" class="logo-img">
+            </div>
+            <div class="nav-menu">
+                <div class="nav-item"><a class="nav-link" id="navInicio">INICIO</a></div>
+                <div class="nav-item">
+                    <a class="nav-link" id="navFacultades">FACULTADES ▼</a>
+                    <div class="dropdown-content" id="dropdownFacultades">
+                        <a href="#" data-id="administrativas">Ciencias Administrativas, Económicas y Financieras</a>
+                        <a href="#" data-id="salud">Ciencias de la Salud y del Deporte</a>
+                        <a href="#" data-id="diseno">Diseño, Comunicación y Bellas Artes</a>
+                        <a href="#" data-id="derecho">Derecho</a>
+                        <a href="#" data-id="educacion">Educación</a>
+                        <a href="#" data-id="sociales">Ciencias Sociales y Humanas</a>
+                        <a href="#" data-id="ingenieria">Ingeniería y Ciencias Básicas</a>
+                    </div>
+                </div>
+                <div class="nav-item"><a class="nav-link" id="navCOMUNICACIONES">COMUNICACIONES</a></div>
+                <div class="nav-item"><a class="nav-link" id="navInnovacion">INNOVACIÓN</a></div>
+                <div class="nav-item"><a class="nav-link" id="navBienestar">BIENESTAR</a></div>
+                <div class="nav-item"><a class="nav-link" id="navRealidades">DOCENTES</a></div>
+            </div>
+            <div class="right-icons">
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" placeholder="🔍 Buscar videos..." class="search-input-header">
+                    <div id="searchDropdown" class="search-dropdown"></div>
+                </div>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-header" id="pageHeader">
+        <h1 id="seccionTitulo">Ceremonias de Graduación</h1>
+        <p id="seccionDescripcion">Todas las ceremonias organizadas por sede</p>
+    </div>
+
+    <div class="top-bar">
+        <a href="index.html" class="volver-btn">← Volver al inicio</a>
+        <div class="dropdown-filtro">
+            <button class="volver-btn" id="dropdownFiltroBtn">
+                🎬 Todas las categorías <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="dropdown-filtro-content" id="dropdownFiltroContent">
+                
+            </div>
+        </div>
+    </div>
+
+    <div id="subseccionesContainer"></div>
+
+    <footer class="footer-moderno">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>🎬 COLOSO PLAY</h4>
+                <p>Plataforma de streaming de la <br>Fundación Universitaria del Área Andina</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/areandina/" target="_blank" rel="noopener noreferrer" class="social-icon">📘</a>
+                    <a href="https://www.instagram.com/areandina/" target="_blank" rel="noopener noreferrer" class="social-icon">📷</a>
+                    <a href="https://co.linkedin.com/school/fundacion-universitaria-del-area-andina/" target="_blank" rel="noopener noreferrer" class="social-icon">🔗</a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h4>📌 NAVEGACIÓN</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="seccion.html?seccion=COMUNICACIONES">COMUNICACIONES</a></li>
+                    <li><a href="seccion.html?seccion=innovacion">Innovación</a></li>
+                    <li><a href="seccion.html?seccion=bienestar">Bienestar</a></li>
+                    <li><a href="seccion.html?seccion=realidades">Docentes</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>🔗 ENLACES ÚTILES</h4>
+                <ul>
+                    <li><a href="https://campusvirtual.areandina.edu.co/" target="_blank" rel="noopener noreferrer">Campus Virtual</a></li>
+                    <li><a href="https://kactus.areandina.edu.co/" target="_blank" rel="noopener noreferrer">Kactus</a></li>
+                    <li><a href="#" id="correoFooter">Correo institucional</a></li>
+                    <li><a href="https://www.areandina.edu.co/servicios-al-estudiante/calendarios-academicos" target="_blank" rel="noopener noreferrer">Calendarios</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>📞 CONTACTO</h4>
+                <ul>
+                    <li><a href="mailto:notificacionjudicial@areandina.edu.co">Correo notificaciones</a></li>
+                    <li><a href="#">📱 WhatsApp</a></li>
+                    <li><a href="#">Línea gratuita: 01 8000 18 0099</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>⚖️ LEGAL</h4>
+                <ul>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="#">Política de cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Fundación Universitaria del Área Andina - Institución sujeta a inspección y vigilancia por el Ministerio de Educación Nacional</p>
+            <p>© 2025 Coloso Play - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <div id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:2000; align-items:center; justify-content:center;">
+        <div style="position:relative; width:90%; max-width:1000px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h3 id="videoTitle" style="color:white;">Reproduciendo</h3>
+                <button id="closeModal" style="background:#e6007e; color:white; border:none; padding:8px 20px; border-radius:30px; cursor:pointer;">✕ Cerrar</button>
+            </div>
+            <iframe id="videoIframe" width="100%" height="400px" style="border:none; border-radius:16px;" allowfullscreen></iframe>
+            <button id="fullscreenBtn" style="position:absolute; bottom:-50px; right:0; background:#7fb536; color:white; border:none; padding:8px 20px; border-radius:30px; cursor:pointer;">⛶ Pantalla completa</button>
+        </div>
+    </div>
+
+    <!-- Ramiro -->
+    <div id="mascota" style="position: fixed; bottom: 20px; right: 20px; width: 70px; cursor: pointer; z-index: 1000;">
+        <img src="imagenes/ramiro.png" alt="Mascota" style="width: 100%; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <div id="mensajeMascota" style="position: absolute; bottom: 80px; right: 0; background: #7fb536; color: white; padding: 5px 10px; border-radius: 20px; font-size: 11px; display: none; white-space: nowrap;">¿Tienes una pregunta? 💬</div>
+    </div>
+
+    <section class="student-chat" id="studentChat" hidden aria-label="Chat de ayuda para estudiantes">
+        <header class="student-chat-header">
+            <div><strong>Coloso Asistente</strong><small id="chatEstadoIA">Ayuda para estudiantes</small></div>
+            <div style="display: flex; gap: .35rem; align-items: center;">
+                <button id="studentChatClose" type="button" aria-label="Cerrar chat">×</button>
+            </div>
+        </header>
+        <div class="student-chat-messages" id="studentChatMessages" aria-live="polite">
+            <div class="chat-message assistant">¡Hola! Soy Coloso 🤖, la asistente con IA de Coloso Play. Puedo responder todo sobre la plataforma: campus virtual, grados, facultades, carreras, bienestar, innovación, radio y mucho más de Areandina. ¿En qué te ayudo?</div>
+        </div>
+        <div class="student-chat-suggestions" aria-label="Preguntas sugeridas">
+            <button type="button">¿Cómo ingreso al Campus Virtual?</button>
+            <button type="button">Información de grados</button>
+            <button type="button">¿Qué facultades hay?</button>
+        </div>
+        <form class="student-chat-form" id="studentChatForm">
+            <label class="sr-only" for="studentChatInput">Escribe tu pregunta</label>
+            <input id="studentChatInput" type="text" autocomplete="off" placeholder="Escribe tu pregunta..." required>
+            <button type="submit" aria-label="Enviar pregunta">Enviar</button>
+        </form>
+    </section>
+
+    <section class="accessibility-widget" aria-label="Herramientas de accesibilidad">
+        <button class="accessibility-trigger" id="accessibilityTrigger" type="button" aria-expanded="false" aria-controls="accessibilityPanel">
+            <span aria-hidden="true">♿</span><span class="accessibility-trigger-label">Accesibilidad</span>
+        </button>
+        <div class="accessibility-panel" id="accessibilityPanel" hidden>
+            <div class="accessibility-panel-header">
+                <div><strong>Accesibilidad</strong><small>Personaliza tu experiencia</small></div>
+                <button class="accessibility-close" id="accessibilityClose" type="button" aria-label="Cerrar menú de accesibilidad">×</button>
+            </div>
+            <div class="accessibility-actions">
+                <button type="button" data-a11y-action="font-decrease" aria-label="Disminuir tamaño del texto">A− <span>Texto menor</span></button>
+                <button type="button" data-a11y-action="font-increase" aria-label="Aumentar tamaño del texto">A+ <span>Texto mayor</span></button>
+                <button type="button" data-a11y-action="contrast" aria-pressed="false">◐ <span>Alto contraste</span></button>
+                <button type="button" data-a11y-action="links" aria-pressed="false">↗ <span>Subrayar enlaces</span></button>
+                <button type="button" data-a11y-action="motion" aria-pressed="false">◌ <span>Reducir movimiento</span></button>
+                <button type="button" data-a11y-action="spacing" aria-pressed="false">↕ <span>Más espaciado</span></button>
+                <button type="button" data-a11y-action="read">🔊 <span>Leer página</span></button>
+                <button type="button" data-a11y-action="stop-read">■ <span>Detener lectura</span></button>
+            </div>
+            <button class="accessibility-reset" id="accessibilityReset" type="button">Restablecer ajustes</button>
+        </div>
+    </section>
+    <script src="js/transitions.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/seccion.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/video-preview.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# Claves y secretos — NUNCA subir
+.env
+.env.*
+
+# Vercel
+.vercel/
+
+# Sistema / caché
+.DS_Store
+Thumbs.db
+node_modules/
+*.log
