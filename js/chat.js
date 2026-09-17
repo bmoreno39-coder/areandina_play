@@ -6,6 +6,13 @@
  */
 (function () {
     'use strict';
+    /* URL del servidor de IA (endpoint /api/chat).
+     * En Vercel va vacío: se usa la ruta relativa del mismo sitio.
+     * Si el frontend se publica en OTRO dominio (p. ej. un servidor de la
+     * universidad), pon aquí la URL completa de tu proyecto en Vercel:
+     *   const SERVIDOR_IA = 'https://tu-proyecto.vercel.app/api/chat';
+     */
+    const SERVIDOR_IA = '';
     const $c = selector => document.querySelector(selector);
     const $$c = selector => [...document.querySelectorAll(selector)];
     const crearElemento = (tag, className, text) => {
@@ -55,7 +62,7 @@
     }
 
     async function responderColosoIA(pregunta) {
-        const respuesta = await fetch('/api/chat', {
+        const respuesta = await fetch(SERVIDOR_IA || '/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ question: pregunta })
