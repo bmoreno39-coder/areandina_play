@@ -6,7 +6,7 @@
 (function () {
     'use strict';
 
-    const reducirMovimiento = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reducirMovimiento = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.body.classList.contains('a11y-reduce-motion');
     const DELAY_MS = 220;
     let navegando = false;
 
