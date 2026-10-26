@@ -1,9 +1,6 @@
 /*
  * COLOso Play — Chat con IA (proxy serverless para Vercel).
  *
- * Aloja la clave secreta sk_ SOLO en la variable de entorno COLOSO_API_KEY
- * del panel de Vercel. El navegador nunca recibe la clave: le habla a este
- * endpoint /api/chat y este llama a Pollinations en el servidor.
  */
 
 const COLOSO_SYSTEM = `Eres Coloso, la asistente virtual con IA oficial de COLOSO PLAY, la plataforma de streaming de la Fundación Universitaria del Área Andina (Areandina) en Colombia. Responde SIEMPRE en español, con tono amable, cercano y profesional, en 2-4 frases concisas. Conoce todo el sitio:
@@ -72,7 +69,7 @@ module.exports = async (req, res) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
             body: JSON.stringify({
-                model: 'openai',
+                model: 'openai/gpt-4o-mini',
                 messages: [
                     { role: 'system', content: COLOSO_SYSTEM },
                     { role: 'user', content: question }

@@ -13,11 +13,14 @@
             const title = document.getElementById('videoTitle');
             iframe.src = url;
             title.innerText = titulo;
+            modal.classList.add('is-open');
             modal.style.display = 'flex';
         }
 
         document.getElementById('closeModal').onclick = () => {
-            document.getElementById('videoModal').style.display = 'none';
+            const modal = document.getElementById('videoModal');
+            modal.classList.remove('is-open');
+            modal.style.display = 'none';
             document.getElementById('videoIframe').src = '';
         };
         document.getElementById('fullscreenBtn').onclick = () => {
@@ -382,7 +385,7 @@
             const videoId = obtenerVideoId(video.url);
             const previewUrl = videoId ? `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&rel=0` : '';
             return `
-                <div class="video-card" onclick="reproducirVideo('${video.url}', '${video.titulo}')"${previewUrl ? ` data-preview-url="${previewUrl}"` : ''}>
+                <div class="video-card" data-video-url="${video.url}" data-video-titulo="${video.titulo}"${previewUrl ? ` data-preview-url="${previewUrl}"` : ''}>
                     <div class="video-thumb-container">
                         <img src="${video.thumb}" class="video-thumb" alt="Miniatura: ${video.titulo}">
                     </div>
@@ -456,15 +459,10 @@
             const container = document.getElementById('carruselesContainer');
             
             // Filtrar videos por categoría
-            const carrerasFiltradas = canalData.carreras.map(carrera => {
-                let videosFiltrados = carrera.videos;
-                if (filtroActivo !== 'todos') {
-                    videosFiltrados = carrera.videos.filter(video => video.categoria === filtroActivo);
-                }
-                return { ...carrera, videos: videosFiltrados };
-            }).filter(carrera => carrera.videos.length > 0);
+            const videosFiltrados = canalData.carreras.flatMap(carrera => carrera.videos)
+                .filter(video => filtroActivo === 'todos' || video.categoria === filtroActivo);
             
-            if (carrerasFiltradas.length === 0) {
+            if (videosFiltrados.length === 0) {
                 container.innerHTML = `<div class="sin-resultados">
                     <h3>🎬 No hay videos en esta categoría</h3>
                     <p>Próximamente agregaremos más contenido.</p>
@@ -472,20 +470,8 @@
                 return;
             }
             
-            container.innerHTML = carrerasFiltradas.map(carrera => `
-                <div class="carrera-section">
-                    <h3 class="carrera-title">🏛️ ${carrera.nombre}</h3>
-                    <div class="carousel-container">
-                        <div class="carousel-track">
-                            ${carrera.videos.map(v => crearTarjetaVideo(v)).join('')}
-                        </div>
-                        <button class="carousel-btn left">❮</button>
-                        <button class="carousel-btn right">❯</button>
-                    </div>
-                </div>
-            `).join('');
+            container.innerHTML = `<div class="video-home-grid">${videosFiltrados.map(video => crearTarjetaVideo(video)).join('')}</div>`;
             
-            inicializarCarruseles();
             setTimeout(actualizarTodasLasVistas, 100);
             actualizarTotalVideos();
             actualizarVistasTotalesCanal();
@@ -510,6 +496,16 @@
         // Inicializar todo
         generarInfoCanal();
         generarCarruseles();
+
+        // Apertura de videos por delegación (sin onclick inline, compatible con la CSP)
+        document.addEventListener('click', (event) => {
+            const tarjeta = event.target.closest('.video-card, .search-dropdown-item');
+            if (!tarjeta) return;
+            const url = tarjeta.dataset.videoUrl;
+            if (!url) return;
+            event.preventDefault();
+            reproducirVideo(url, tarjeta.dataset.videoTitulo || 'Video');
+        });
 
         // Header funcional
         document.getElementById('logoLink').onclick = () => window.ColoNavegar?.('index.html');

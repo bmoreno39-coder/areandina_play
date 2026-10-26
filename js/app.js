@@ -68,6 +68,7 @@ function abrirVideo(url, title = 'Video') {
     registrarVisita(title);
     $('#videoTitle').textContent = title;
     frame.src = url;
+    modal.classList.add('is-open');
     modal.style.display = 'flex';
 }
 
@@ -75,7 +76,10 @@ function cerrarVideo() {
     const modal = $('#videoModal');
     const frame = $('#videoIframe');
     if (frame) frame.src = '';
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+        modal.classList.remove('is-open');
+        modal.style.display = 'none';
+    }
 }
 
 /* ===== 3. TARJETAS Y CARRUSELES ===== */

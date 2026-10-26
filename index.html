@@ -10,6 +10,7 @@
     <link rel="preload" as="image" href="imagenes/CARRUSEL 1.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/modern.css?v=20261026b">
 </head>
 <body>
     <div class="burbuja-rosa" aria-hidden="true"></div>
@@ -95,31 +96,6 @@
         <div class="carousel-dots" id="heroDots"></div>
     </div>
 
-    <!-- Filtros de busqueda -->
-    <div class="filters-section">
-    <select class="filter-select" id="modalidad">
-        <option value="">Todas las modalidades ▼</option>
-        <option value="presencial">Presencial</option>
-        <option value="virtual">Virtual</option>
-        <option value="distancia">Distancia</option>
-    </select>
-    <select class="filter-select" id="tipoPrograma">
-        <option value="">Todos los tipos ▼</option>
-        <option value="pregrado">Pregrado</option>
-        <option value="posgrado">Posgrado</option>
-        <option value="especializacion">Especialización</option>
-        <option value="maestria">Maestría</option>
-    </select>
-    <select class="filter-select" id="sede">
-        <option value="">Todas las sedes ▼</option>
-        <option value="bogota">Bogotá</option>
-        <option value="pereira">Pereira</option>
-        <option value="valledupar">Valledupar</option>
-        <option value="virtual">Virtual</option>
-    </select>
-    <button class="search-btn" id="buscarEstudiosBtn">🔍 Buscar estudios</button>
-</div>
-
     <!-- ===== Seccion: Facultades ===== -->
     <div class="section">
         <div class="section-header">
@@ -131,45 +107,45 @@
     </div>
 
     <!-- Seccion: Ceremonias de graduacion -->
-    <div class="section">
+    <div class="section home-dependency-section">
         <div class="section-header">
             <h2 class="section-title">🎓 COMUNICACIONES</h2>  
             <a href="seccion.html?seccion=COMUNICACIONES" class="view-all">Ver todo →</a>
         </div>
-        <div class="carousel-container" id="COMUNICACIONESCarousel">
+        <div class="carousel-container home-video-feed" id="COMUNICACIONESCarousel">
             <div class="carousel-track" id="COMUNICACIONESTrack"></div>
         </div>
     </div>
 
     <!-- Seccion: Centro de innovacion -->
-    <div class="section">
+    <div class="section home-dependency-section">
         <div class="section-header">
             <h2 class="section-title">💡 CENTRO DE INNOVACIÓN TECNOLÓGICA</h2>
             <a href="seccion.html?seccion=innovacion" class="view-all">Ver todo →</a>
         </div>
-        <div class="carousel-container" id="innovacionCarousel">
+        <div class="carousel-container home-video-feed" id="innovacionCarousel">
             <div class="carousel-track" id="innovacionTrack"></div>
         </div>
     </div>
 
     <!-- Seccion: Docentes -->
-    <div class="section">
+    <div class="section home-dependency-section">
         <div class="section-header">
             <h2 class="section-title">🧑🏫 DOCENTES</h2>
             <a href="seccion.html?seccion=realidades" class="view-all">Ver todo →</a>
         </div>
-        <div class="carousel-container" id="realidadesCarousel">
+        <div class="carousel-container home-video-feed" id="realidadesCarousel">
             <div class="carousel-track" id="realidadesTrack"></div>
         </div>
     </div>
 
     <!-- Seccion: Bienestar universitario -->
-    <div class="section">
+    <div class="section home-dependency-section">
         <div class="section-header">
             <h2 class="section-title">❤️ BIENESTAR UNIVERSITARIO</h2>
             <a href="seccion.html?seccion=bienestar" class="view-all">Ver todo →</a>
         </div>
-        <div class="carousel-container" id="bienestarCarousel">
+        <div class="carousel-container home-video-feed" id="bienestarCarousel">
             <div class="carousel-track" id="bienestarTrack"></div>
         </div>
     </div>
@@ -180,10 +156,8 @@
             <h3 class="info-title">🔗 ACCESOS DIRECTOS</h3>
             <ul class="accesos-lista">
                 <li><a href="https://campusvirtual.areandina.edu.co/" target="_blank" rel="noopener noreferrer">📚 Campus Virtual</a></li>
-                <li><a href="https://kactus.areandina.edu.co/" target="_blank" rel="noopener noreferrer">🐛 Kactus</a></li>
-                <li><a href="#" id="correoLink" target="_blank" rel="noopener noreferrer">✉️ Correo electrónico</a></li>
+                <li><a href="mailto:Cetabogota@areandina.edu.co" id="correoLink">✉ Cetabogota@areandina.edu.co</a></li>
                 <li><a href="https://www.areandina.edu.co/servicios-al-estudiante/calendarios-academicos" target="_blank" rel="noopener noreferrer">📅 Calendarios Académicos</a></li>
-                <li><a href="https://servicios.areandina.edu.co/consultatuclase/" target="_blank" rel="noopener noreferrer">📖 Consulta tu clase</a></li>
                 <li><a href="https://www.areandina.edu.co/servicios-al-graduado/inscripcion-a-grados" target="_blank" rel="noopener noreferrer">🎓 Postulación a Grados</a></li>
             </ul>
         </div>
@@ -219,7 +193,7 @@
             <h4>📌 NAVEGACIÓN</h4>
             <ul>
                 <li><a href="index.html">Inicio</a></li>
-                <li><a href="seccion.html?seccion=COMUNICACIONES">COMUNICACIONES</a></li>
+                <li><a href="seccion.html?seccion=COMUNICACIONES">Comunicaciones</a></li>
                 <li><a href="seccion.html?seccion=innovacion">Innovación</a></li>
                 <li><a href="seccion.html?seccion=bienestar">Bienestar</a></li>
                 <li><a href="seccion.html?seccion=realidades">Docentes</a></li>
@@ -230,8 +204,6 @@
             <h4>🔗 ENLACES ÚTILES</h4>
             <ul>
                 <li><a href="https://campusvirtual.areandina.edu.co/" target="_blank" rel="noopener noreferrer">Campus Virtual</a></li>
-                <li><a href="https://kactus.areandina.edu.co/" target="_blank" rel="noopener noreferrer">Kactus</a></li>
-                <li><a href="#" id="correoFooter">Correo institucional</a></li>
                 <li><a href="https://www.areandina.edu.co/servicios-al-estudiante/calendarios-academicos" target="_blank" rel="noopener noreferrer">Calendarios</a></li>
             </ul>
         </div>
@@ -239,8 +211,8 @@
         <div class="footer-column">
             <h4>📞 CONTACTO</h4>
             <ul>
-                <li><a href="mailto:notificacionjudicial@areandina.edu.co">Correo notificaciones</a></li>
-                <li><a href="#">📱 WhatsApp</a></li>
+                <li><a href="mailto:Cetabogota@areandina.edu.co">✉ Cetabogota@areandina.edu.co</a></li>
+                <li><a href="https://wa.me/573212563745" target="_blank" rel="noopener noreferrer">📱 Jesus Sanchez - 3212563745</a></li>
                 <li><a href="#">Línea gratuita: 01 8000 18 0099</a></li>
             </ul>
         </div>
@@ -262,14 +234,16 @@
 </footer>
 
 
-    <div id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:2000; align-items:center; justify-content:center;">
-        <div style="position:relative; width:90%; max-width:1000px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <h3 id="videoTitle" style="color:white;">Reproduciendo video</h3>
-                <button id="closeModal" style="background:#e6007e; color:white; border:none; padding:8px 20px; border-radius:30px; cursor:pointer;">✕ Cerrar</button>
+    <div id="videoModal" class="video-modal" role="dialog" aria-modal="true" aria-label="Reproductor de video">
+        <div class="video-modal-shell">
+            <div class="video-modal-top">
+                <h3 id="videoTitle">Reproduciendo video</h3>
+                <button id="closeModal" class="video-modal-close" type="button" aria-label="Cerrar video">✕ Cerrar</button>
             </div>
-            <iframe id="videoIframe" width="100%" height="400px" style="border:none; border-radius:16px;" allowfullscreen></iframe>
-            <button id="fullscreenBtn" style="position:absolute; bottom:-50px; right:0; background:#7fb536; color:white; border:none; padding:8px 20px; border-radius:30px; cursor:pointer;">⛶ Pantalla completa</button>
+            <div class="video-modal-frame">
+                <iframe id="videoIframe" title="Reproductor de video" allowfullscreen></iframe>
+            </div>
+            <button id="fullscreenBtn" class="video-modal-fullscreen" type="button">⛶ Pantalla completa</button>
         </div>
     </div>
 
@@ -352,7 +326,6 @@
 
     <div id="miModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Información destacada">
         <div class="modal-contenedor">
-            <button id="cerrarBanner" class="modal-close" type="button" aria-label="Cerrar anuncio">×</button>
             <a href="https://www.areandina.edu.co/servicios-administrativos/centro-de-recursos-educativos-0" target="_blank" rel="noopener noreferrer">
                 <img src="imagenes/banner.png" alt="Conoce el Centro de Recursos Educativos" loading="lazy">
             </a>
@@ -362,7 +335,8 @@
     <script src="js/analytics.js"></script>
     <script src="js/security.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/chat.js"></script>
+    <script src="js/chat.js?v=20261026-ia1"></script>
     <script src="js/video-preview.js"></script>
+    <script src="js/ui-modern.js?v=20261026"></script>
 </body>
 </html>

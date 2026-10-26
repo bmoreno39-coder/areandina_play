@@ -94,10 +94,9 @@
             }
             messages.scrollTop = messages.scrollHeight;
         };
-        const actualizarEstadoIA = () => {
-            if (estadoIA) estadoIA.textContent = 'IA conectada (servidor)';
+        const actualizarEstadoIA = conectado => {
+            if (estadoIA) estadoIA.textContent = conectado ? 'IA conectada' : 'Modo de ayuda local';
         };
-        actualizarEstadoIA();
         $c('#mascota')?.addEventListener('click', () => {
             chat.hidden = false;
             chat.classList.remove('chat-opening');
@@ -112,8 +111,14 @@
             try {
                 const texto = await responderColosoIA(pregunta);
                 mostrarEscribiendo(false);
-                if (texto) { agregarMensaje(texto, 'assistant'); form.classList.remove('is-sending'); return; }
+                if (texto) {
+                    actualizarEstadoIA(true);
+                    agregarMensaje(texto, 'assistant');
+                    form.classList.remove('is-sending');
+                    return;
+                }
             } catch { /* cae al respaldo */ }
+            actualizarEstadoIA(false);
             window.setTimeout(() => {
                 mostrarEscribiendo(false);
                 agregarMensaje(respuestaBase(pregunta), 'assistant');
