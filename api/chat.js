@@ -37,6 +37,10 @@ function esReintentable(status) {
     return status === 408 || status === 429 || status >= 500;
 }
 
+function esRespuestaDeError(texto) {
+    return /(?:not enough credits|paid pollen|top up|insufficient(?:\s+credits)?|invalid api key|api key.*(?:invalid|missing))/i.test(texto);
+}
+
 async function consultarPollinations(apiKey, question) {
     let ultimoError;
     for (let intento = 0; intento < 2; intento += 1) {
@@ -103,7 +107,10 @@ module.exports = async (req, res) => {
     try {
         const datos = await consultarPollinations(apiKey, question);
         const texto = datos.choices?.[0]?.message?.content?.trim();
-        if (!texto) return res.status(502).json({ error: 'El proveedor de IA no devolvió respuesta' });
+        if (!texto || esRespuestaDeError(texto)) {
+            console.error('Pollinations no devolvió una respuesta válida para el chat.');
+            return res.status(502).json({ error: 'El servicio de IA no está disponible temporalmente.' });
+        }
         return res.status(200).json({ text: texto });
     } catch (error) {
         console.error('Error llamando a Pollinations:', error.message);
