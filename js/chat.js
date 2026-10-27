@@ -13,6 +13,9 @@
      *   const SERVIDOR_IA = 'https://tu-proyecto.vercel.app/api/chat';
      */
     const SERVIDOR_IA = '';
+    // Mientras se restablece el proveedor, el chat usa únicamente el
+    // conocimiento local y no intenta llamar al endpoint remoto.
+    const USAR_IA_REMOTA = false;
     const $c = selector => document.querySelector(selector);
     const $$c = selector => [...document.querySelectorAll(selector)];
     const crearElemento = (tag, className, text) => {
@@ -62,6 +65,7 @@
     }
 
     async function responderColosoIA(pregunta) {
+        if (!USAR_IA_REMOTA) return null;
         const controller = new AbortController();
         const timeout = window.setTimeout(() => controller.abort(), 25_000);
         try {
@@ -104,6 +108,7 @@
         const actualizarEstadoIA = conectado => {
             if (estadoIA) estadoIA.textContent = conectado ? 'IA conectada' : 'Modo de ayuda local';
         };
+        actualizarEstadoIA(false);
         $c('#mascota')?.addEventListener('click', () => {
             chat.hidden = false;
             chat.classList.remove('chat-opening');
