@@ -17,29 +17,65 @@ const COLOSO_SYSTEM = `Eres Coloso, la asistente virtual con IA oficial de COLOS
 Si te preguntan algo que no conoces, dilo con honestidad y ofrece ayuda sobre los temas del sitio. No inventes URLs ni datos.`;
 
 const MAX_QUESTION_LENGTH = 500;
-const MAX_MESSAGES = 10;
+const REQUEST_TIMEOUT_MS = 20_000;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_REQUESTS = 6;
+const rateLimits = new Map();
 
-// Límite simple por IP (best-effort, en memoria). Evita abusos básicos.
-const cache = new Map();
-const limpiarCache = () => {
-    const ahora = Date.now();
-    for (const [ip, venc] of cache) if (venc < ahora) cache.delete(ip);
-};
-setInterval(limpiarCache, 60 * 1000).unref?.();
-
+// En serverless el límite es "best effort", pero evita bloquear a una persona
+// durante 30 segundos por una sola consulta, como ocurría antes.
 function dentroDelLimite(ip) {
-    limpiarCache();
-    const ahora = Date.now();
-    const previo = cache.get(ip);
-    if (previo && previo > ahora) return false;
-    cache.set(ip, ahora + 30 * 1000);
+    const oldestAllowed = Date.now() - RATE_LIMIT_WINDOW_MS;
+    const timestamps = (rateLimits.get(ip) || []).filter(time => time > oldestAllowed);
+    if (timestamps.length >= RATE_LIMIT_REQUESTS) return false;
+    timestamps.push(Date.now());
+    rateLimits.set(ip, timestamps);
     return true;
+}
+
+function esReintentable(status) {
+    return status === 408 || status === 429 || status >= 500;
+}
+
+async function consultarPollinations(apiKey, question) {
+    let ultimoError;
+    for (let intento = 0; intento < 2; intento += 1) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+        try {
+            const response = await fetch('https://gen.pollinations.ai/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
+                signal: controller.signal,
+                body: JSON.stringify({
+                    model: process.env.COLOSO_MODEL || 'openai/gpt-4o-mini',
+                    messages: [
+                        { role: 'system', content: COLOSO_SYSTEM },
+                        { role: 'user', content: question }
+                    ],
+                    temperature: 0.5
+                })
+            });
+            if (response.ok) return response.json();
+            const detalle = await response.text().catch(() => '');
+            ultimoError = new Error(`Pollinations respondió ${response.status}: ${detalle.slice(0, 300)}`);
+            if (!esReintentable(response.status) || intento === 1) throw ultimoError;
+        } catch (error) {
+            ultimoError = error;
+            if (intento === 1) throw error;
+        } finally {
+            clearTimeout(timeout);
+        }
+        await new Promise(resolve => setTimeout(resolve, 350));
+    }
+    throw ultimoError;
 }
 
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Cache-Control', 'no-store');
 
     if (req.method === 'OPTIONS') return res.status(204).end();
     if (req.method !== 'POST') return res.status(405).json({ error: 'Método no permitido' });
@@ -61,33 +97,16 @@ module.exports = async (req, res) => {
     }
 
     if (!dentroDelLimite(ip)) {
-        return res.status(429).json({ error: 'Demasiadas peticiones. Espera unos segundos.' });
+        return res.status(429).json({ error: 'Demasiadas peticiones. Espera un minuto e inténtalo de nuevo.' });
     }
 
     try {
-        const response = await fetch('https://gen.pollinations.ai/v1/chat/completions', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-            body: JSON.stringify({
-                model: 'openai/gpt-4o-mini',
-                messages: [
-                    { role: 'system', content: COLOSO_SYSTEM },
-                    { role: 'user', content: question }
-                ],
-                temperature: 0.7
-            })
-        });
-        if (!response.ok) {
-            const detalle = await response.text().catch(() => '');
-            console.error(`Pollinations respondió ${response.status}: ${detalle.slice(0, 300)}`);
-            return res.status(502).json({ error: `El proveedor de IA falló (${response.status})` });
-        }
-        const datos = await response.json();
+        const datos = await consultarPollinations(apiKey, question);
         const texto = datos.choices?.[0]?.message?.content?.trim();
         if (!texto) return res.status(502).json({ error: 'El proveedor de IA no devolvió respuesta' });
         return res.status(200).json({ text: texto });
     } catch (error) {
         console.error('Error llamando a Pollinations:', error.message);
-        return res.status(502).json({ error: 'No se pudo contactar el proveedor de IA' });
+        return res.status(502).json({ error: 'El servicio de IA no está disponible temporalmente.' });
     }
 };

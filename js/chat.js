@@ -62,14 +62,21 @@
     }
 
     async function responderColosoIA(pregunta) {
-        const respuesta = await fetch(SERVIDOR_IA || '/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ question: pregunta })
-        });
-        if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
-        const datos = await respuesta.json();
-        return datos.text || null;
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 25_000);
+        try {
+            const respuesta = await fetch(SERVIDOR_IA || '/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question: pregunta }),
+                signal: controller.signal
+            });
+            if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
+            const datos = await respuesta.json();
+            return datos.text || null;
+        } finally {
+            window.clearTimeout(timeout);
+        }
     }
 
     function iniciarChat() {
@@ -105,7 +112,10 @@
             input.focus();
         });
         $c('#studentChatClose')?.addEventListener('click', () => { chat.hidden = true; });
+        let enviando = false;
         const responder = async pregunta => {
+            if (enviando) return;
+            enviando = true;
             form.classList.add('is-sending');
             mostrarEscribiendo(true);
             try {
@@ -115,6 +125,7 @@
                     actualizarEstadoIA(true);
                     agregarMensaje(texto, 'assistant');
                     form.classList.remove('is-sending');
+                    enviando = false;
                     return;
                 }
             } catch { /* cae al respaldo */ }
@@ -123,9 +134,10 @@
                 mostrarEscribiendo(false);
                 agregarMensaje(respuestaBase(pregunta), 'assistant');
                 form.classList.remove('is-sending');
+                enviando = false;
             }, 700 + Math.random() * 500);
         };
-        form.addEventListener('submit', event => { event.preventDefault(); const pregunta = input.value.trim(); if (!pregunta) return; agregarMensaje(pregunta, 'user'); input.value = ''; responder(pregunta); });
+        form.addEventListener('submit', event => { event.preventDefault(); const pregunta = input.value.trim(); if (!pregunta || enviando) return; agregarMensaje(pregunta, 'user'); input.value = ''; responder(pregunta); });
         $$c('.student-chat-suggestions button').forEach(button => button.addEventListener('click', () => { input.value = button.textContent; form.requestSubmit(); }));
     }
 
